@@ -26,8 +26,8 @@ const VERIFIER_URL = process.env.VERIFIER_URL ?? "https://verifier.goodmeta.co"
 const VERIFIER_API_KEY = process.env.VERIFIER_API_KEY ?? ""
 // FACILITATOR_URL not needed — x402 SDK handles facilitator selection
 
-// Budget: $1.00 for this demo run (100 cents = ~142 Exa searches)
-const BUDGET_CENTS = 100
+// Budget: configurable via env, default $1.00
+const BUDGET_CENTS = parseInt(process.env.BUDGET_CENTS ?? "100", 10)
 const AGENT_ID = "demo-agent-001"
 
 // Research queries
