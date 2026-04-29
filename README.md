@@ -6,11 +6,11 @@ Makes real USDC payments on Base mainnet to [Exa](https://exa.ai) (AI search), w
 
 ## What it does
 
-1. Creates a spending budget on agent-verifier ($1.00)
+1. Creates a spending budget on agent-verifier (configurable via `BUDGET_CENTS` env var, default $1.00)
 2. For each search query:
    - Checks budget (hold placed before payment)
    - Pays Exa via x402 ($0.007/search, USDC on Base)
-   - Settles hold after payment succeeds
+   - Settles hold after payment succeeds or releases on failure
 3. Stops gracefully when budget is exhausted
 
 ```
@@ -31,15 +31,10 @@ cp .env.example .env  # fill in keys
 npm run agent
 ```
 
-## Example output
+## Example: $1.00 budget (5 searches succeed)
 
 ```
-═══════════════════════════════════════════════════════════
-DEMO AGENT — x402 + Budget Enforcement
-═══════════════════════════════════════════════════════════
-Agent wallet: 0x2ee5...9804
-Verifier:     https://verifier.goodmeta.co
-Budget:       $1.00 USD
+BUDGET_CENTS=100 npm run agent
 
 ─── Query 1: "x402 protocol agent payments 2026" ───
   Budget check: approved (hold: ver_b4178512...)
@@ -47,13 +42,31 @@ Budget:       $1.00 USD
   Settled: hold confirmed
     → x402 - Payment Required | Internet-Native Payments Standard
 
-═══════════════════════════════════════════════════════════
-SUMMARY
-═══════════════════════════════════════════════════════════
 Searches completed: 5
 Budget denials:     0
 Total x402 spent:   35000 USDC units ($0.0350)
 ```
+
+## Example: $0.01 budget (agent stopped at limit)
+
+```
+BUDGET_CENTS=1 npm run agent
+
+─── Query 1: "x402 protocol agent payments 2026" ───
+  Budget check: approved (hold: ver_f7e0896a...)
+  Exa: 3 results, paid 7000 USDC units
+  Settled: hold confirmed
+
+─── Query 2: "cross-protocol budget enforcement AI agents" ───
+  DENIED: BUDGET_EXCEEDED
+  Budget exhausted — stopping gracefully.
+
+Searches completed: 1
+Budget denials:     1
+Total x402 spent:   7000 USDC units ($0.0070)
+```
+
+Without agent-verifier, the agent would spend until the wallet is empty. With it, the agent stops at the budget limit.
 
 ## Why this exists
 
