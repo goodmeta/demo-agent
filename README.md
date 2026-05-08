@@ -1,6 +1,6 @@
 # Demo Agent
 
-Research agent that pays for data via x402 with cross-service budget enforcement.
+Research agent demonstrating the [Budget Authority Protocol](https://github.com/goodmeta/agent-payments-landscape/blob/main/specs/budget-authority-protocol.md) — real x402 payments with cross-service budget enforcement.
 
 Makes real USDC payments on Base mainnet to [Exa](https://exa.ai) (AI search), with budget tracking and hold/settle via [agent-verifier](https://github.com/goodmeta/agent-verifier).
 
