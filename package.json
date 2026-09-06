@@ -1,6 +1,7 @@
 {
   "name": "@goodmeta/demo-agent",
   "version": "1.0.0",
+  "license": "Apache-2.0",
   "description": "Research agent with x402 payments + cross-service budget enforcement via agent-verifier",
   "type": "module",
   "scripts": {
